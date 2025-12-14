@@ -29,10 +29,16 @@ def get_info():
     ydl_opts = {
         'quiet': True,
         'no_warnings': True,
+        'nocheckcertificate': True,
     }
     
+    # プロキシ設定（HTTPプロキシとして使用）
     if PROXY:
-        ydl_opts['proxy'] = PROXY
+        # プロキシURLを正規化
+        proxy_url = PROXY.strip()
+        if not proxy_url.startswith('http://') and not proxy_url.startswith('https://'):
+            proxy_url = 'http://' + proxy_url
+        ydl_opts['proxy'] = proxy_url
     
     try:
         with yt_dlp.YoutubeDL(ydl_opts) as ydl:
@@ -57,10 +63,14 @@ def get_formats():
     ydl_opts = {
         'quiet': True,
         'no_warnings': True,
+        'nocheckcertificate': True,
     }
     
     if PROXY:
-        ydl_opts['proxy'] = PROXY
+        proxy_url = PROXY.strip()
+        if not proxy_url.startswith('http://') and not proxy_url.startswith('https://'):
+            proxy_url = 'http://' + proxy_url
+        ydl_opts['proxy'] = proxy_url
     
     try:
         with yt_dlp.YoutubeDL(ydl_opts) as ydl:
@@ -94,10 +104,14 @@ def download():
         'outtmpl': os.path.join(temp_dir, '%(title)s.%(ext)s'),
         'quiet': True,
         'no_warnings': True,
+        'nocheckcertificate': True,
     }
     
     if PROXY:
-        ydl_opts['proxy'] = PROXY
+        proxy_url = PROXY.strip()
+        if not proxy_url.startswith('http://') and not proxy_url.startswith('https://'):
+            proxy_url = 'http://' + proxy_url
+        ydl_opts['proxy'] = proxy_url
     
     try:
         with yt_dlp.YoutubeDL(ydl_opts) as ydl:
